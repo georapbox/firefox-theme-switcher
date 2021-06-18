@@ -1,0 +1,129 @@
+:root {
+  --primary-color: #0061e0;
+  --primary-color-alt: #0250bb;
+
+  --body-color: #15141a;
+  --body-background-color: #ffffff;
+
+  --header-border-color: #dfdfe5;
+
+  --anchor-color: var(--primary-color);
+
+  --button-color: var(--body-background-color);
+  --button-background-color: var(--primary-color);
+  --button-background-color-hover: var(--primary-color-alt);
+
+  --select-background-color: #f1f3f4;
+  --select-border-color: #dfdfe5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #04ddff;
+    --primary-color-alt: #80ebff;
+
+    --body-background-color: #1c1b22;
+    --body-color: #fbfbfe;
+
+    --header-border-color: #52525e;
+
+    --anchor-color: var(--primary-color);
+
+    --button-color: var(--body-background-color);
+    --button-background-color: var(--primary-color);
+    --button-background-color-hover: var(--primary-color-alt);
+
+    --select-background-color: #42414d;
+    --select-border-color: #52525e;
+  }
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 250px;
+  font-size: 1.1rem;
+  overflow: hidden;
+  appearance: none;
+  color: var(--body-color);
+  background-color: var(--body-background-color);
+}
+
+header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--header-border-color);
+}
+
+header h3 {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: normal;
+}
+
+header h3 img {
+  margin-right: 0.5rem;
+}
+
+section {
+  padding: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a,
+a:visited {
+  color: var(--anchor-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+select {
+  width: 100%;
+  padding: 0.75rem 0.25rem;
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--body-color);
+  background-color: var(--select-background-color);
+  border: 1px solid var(--select-border-color);
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.btn,
+a.btn {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  color: var(--button-color);
+  background-color: var(--button-background-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.btn:hover,
+a.btn:hover {
+  background-color: var(--primary-color-alt);
+}
+
+.btn.btn-block {
+  width: 100%;
+}
