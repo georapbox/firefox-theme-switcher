@@ -4,7 +4,7 @@ A Firefox extension that provides an easy way to switch among your installed the
 
 ## Links
 
-- Firefox marketplace: https://addons.mozilla.org/en-US/firefox/addon/theme-switcher-for-firefox/
+- Firefox marketplace: https://addons.mozilla.org/firefox/addon/theme-switcher-for-firefox/
 
 ## Screenshots
 
