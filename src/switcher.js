@@ -6,34 +6,28 @@ function enableTheme(evt) {
 }
 
 browser.management.getAll().then(extensions => {
-  var themes = [];
-  
-  for (const extension of extensions) {
-    if (extension.type === 'theme') {
-      if (extension.enabled) { // current theme at the top
-        const option = document.createElement('option');
+  const themes = extensions.filter(extension => extension.type === 'theme');
 
-        option.textContent = extension.name;
-        option.title = extension.description;
-        option.value = extension.id;
-        option.selected = true;
-        
-        themeSelect.appendChild(option);
-      }
-      else {
-        themes.push([extension.name, extension.description, extension.id, extension.enabled]);
-      }
+  // Sort themes in place by enabled status, then by name.
+  // This puts the enabled theme at the top of the list
+  // and sorts the rest of the themes alphabetically.
+  themes.sort((a, b) => {
+    if (a.enabled && !b.enabled) {
+      return -1;
+    } else if (!a.enabled && b.enabled) {
+      return 1;
+    } else {
+      return a.name.localeCompare(b.name);
     }
-  }
-  themes.sort();
-  
+  });
+
   for (const theme of themes) {
     const option = document.createElement('option');
 
-    option.textContent = theme[0];
-    option.title = theme[1];
-    option.value = theme[2];
-    option.selected = theme[3];
+    option.textContent = theme.name;
+    option.title = theme.description;
+    option.value = theme.id;
+    option.selected = !!theme.enabled;
 
     themeSelect.appendChild(option);
   }
