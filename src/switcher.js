@@ -1,36 +1,84 @@
-const themeSelect = document.getElementById('theme-select');
+(async function () {
+  const themesList = document.getElementById('themes-list');
+  const searchInput = document.getElementById('search');
 
-function enableTheme(evt) {
-  evt.preventDefault();
-  browser.management.setEnabled(evt.target.value, true);
-}
+  const extensions = await browser.management.getAll() || [];
+  const allThemes = extensions.filter(extension => extension.type === 'theme');
+  const systemThemeIds = ['default-theme@mozilla.org', 'firefox-compact-light@mozilla.org', 'firefox-compact-dark@mozilla.org'];
+  const systemThemes = allThemes.filter(theme => systemThemeIds.includes(theme.id));
+  const userThemes = allThemes.filter(theme => !systemThemeIds.includes(theme.id));
 
-browser.management.getAll().then(extensions => {
-  const themes = extensions.filter(extension => extension.type === 'theme');
+  userThemes.sort((a, b) => a.name.localeCompare(b.name));
 
-  // Sort themes in place by enabled status, then by name.
-  // This puts the enabled theme at the top of the list
-  // and sorts the rest of the themes alphabetically.
+  const themes = [...systemThemes, ...userThemes];
+
+  const createTheme = theme => {
+    const li = document.createElement('li');
+    const themeButton = document.createElement('button');
+
+    themeButton.type = 'button';
+    themeButton.textContent = theme.name;
+    themeButton.title = theme.description;
+    themeButton.setAttribute('data-id', theme.id);
+    themeButton.toggleAttribute('data-enabled', !!theme.enabled);
+
+    if (systemThemeIds.includes(theme.id)) {
+      const em = document.createElement('em');
+      em.style.opacity = 0.7;
+      em.textContent = ' (system theme)';
+      themeButton.appendChild(em);
+    }
+
+    li.appendChild(themeButton);
+    themesList.appendChild(li);
+  };
+
+  // Sort themes in place by enabled status.
+  // This puts the enabled theme at the top of the list.
   themes.sort((a, b) => {
     if (a.enabled && !b.enabled) {
       return -1;
     } else if (!a.enabled && b.enabled) {
       return 1;
-    } else {
-      return a.name.localeCompare(b.name);
     }
   });
 
   for (const theme of themes) {
-    const option = document.createElement('option');
-
-    option.textContent = theme.name;
-    option.title = theme.description;
-    option.value = theme.id;
-    option.selected = !!theme.enabled;
-
-    themeSelect.appendChild(option);
+    createTheme(theme);
   }
-});
 
-themeSelect.addEventListener('change', enableTheme);
+  const onSelect = evt => {
+    evt.preventDefault();
+
+    const themeButton = evt.target.closest('button');
+
+    if (themeButton) {
+      browser.management.setEnabled(themeButton.getAttribute('data-id'), true);
+
+      themesList.querySelectorAll('button[data-enabled]').forEach(btn => {
+        btn.removeAttribute('data-enabled');
+        btn.querySelector('.icon')?.remove();
+      });
+
+      themeButton.setAttribute('data-enabled', '');
+    }
+  };
+
+  const onSearch = evt => {
+    const value = evt.target.value.trim();
+
+    themesList.replaceChildren();
+
+    const filteredThemes = themes.filter(theme => {
+      return theme.name.toLowerCase().includes(value.toLowerCase());
+    });
+
+    for (const theme of filteredThemes) {
+      createTheme(theme);
+    }
+  };
+
+  themesList.addEventListener('click', onSelect);
+  searchInput.addEventListener('input', onSearch);
+}());
+
