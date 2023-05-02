@@ -1,10 +1,10 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "version": "1.2.0",
   "name": "Theme Switcher",
   "description": "Provides an easy way to switch among your installed themes by adding a shortcut icon to the toolbar.",
   "homepage_url": "https://github.com/georapbox/firefox-theme-switcher",
-  "action": {
+  "browser_action": {
     "default_title": "Theme Switcher",
     "default_popup": "switcher.html",
     "browser_style": true,
@@ -22,7 +22,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "strict_min_version": "55.0a1"
+      "strict_min_version": "57.0"
     }
   }
 }
