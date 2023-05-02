@@ -6,37 +6,34 @@
   </head>
   <body>
     <header>
-      <h3>
+      <h2 class="title">
         <img src="icon.svg" width="19" height="19" alt="" />
         Theme Switcher
-      </h3>
+      </h2>
     </header>
 
-    <section>
+    <main>
+      <form class="search-form">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+        <input type="text" name="search" id="search" placeholder="Search installed themes">
+      </form>
+
+      <ul class="themes-list" id="themes-list"></ul>
+
+      <div class="no-items">No themes found.</div>
+    </main>
+
+    <footer>
+
+
       <p>
-        <label>Choose your theme:</label>
-        <select name="theme" id="theme-select"></select>
-      </p>
-
-      <p style="margin-bottom: 0.5rem;">
-        <a href="https://addons.mozilla.org/en-US/firefox/themes/" style="display: flex; align-items: center;">
-          <span style="margin-right: 0.25rem;">
-            Get more themes
-          </span>
-
-          <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="18" height="18">
-            <title>Chevron Forward</title>
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/>
-          </svg>
-        </a>
-      </p>
-
-      <p style="margin: 0; font-weight: lighter;">
         <small>
           Icon made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         </small>
       </p>
-    </section>
+    </footer>
 
     <script src="switcher.js"></script>
   </body>
